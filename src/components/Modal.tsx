@@ -1,11 +1,12 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { IoCloseOutline } from "react-icons/io5";
+import TableComponent from "./TableComponent";
 
 interface myProps {
   setModal: Dispatch<SetStateAction<boolean>>;
 }
 
-const Modal: React.FC<myProps> = ({ setModal }) => {
+const Modal = ({ setModal }: myProps) => {
   const showmodal = () => {
     setModal((prev) => !prev);
   };
@@ -26,37 +27,40 @@ const Modal: React.FC<myProps> = ({ setModal }) => {
           </button>
         </div>
       </div>
-      <div className="modal-content bg-white w-full h-[1000px] px-4  overflow-y-auto">
+      <div className="modal-content bg-white w-full h-fit px-4 overflow-y-auto">
         <div className="bg-gray-200 w-full h-[600px] p-4">
-          <div className="bg-white w-full h-full flex flex-col py-7 px-4 gap-3 rounded-t-md">
-            <h1 className="text-[27px]">Invoice</h1>
-            <div className="w-full h-fit flex flex-col text-[15px]">
-              <h1>Date:</h1>
-              <p>04 Jul, 2024</p>
+          <div className="flex flex-col h-full w-full rounded-t-md">
+            <div className="bg-white w-full h-fit flex flex-col pt-7 pb-16 px-4 gap-3 rounded-t-md border-b-4 border-gray-500">
+              <h1 className="text-[27px]">Invoice</h1>
+              <div className="w-full h-fit flex flex-col text-[15px]">
+                <h1 className="text-[13px]">Date:</h1>
+                <p>04 Jul, 2024</p>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="w-full h-fit flex flex-col text-[15px]">
+                  <h1 className="text-[13px]">Biiled from:</h1>
+                  <p>Hospital test</p>
+                </div>
+                <div className="w-full h-fit flex flex-col text-[15px]">
+                  <h1 className="text-[13px]">Billed to:</h1>
+                  <p>Emmnual Afolabi</p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between">
+                <div className="w-full h-fit flex flex-col text-[15px]">
+                  <h1 className="text-[13px]">Service Provider</h1>
+                  <p>Hospital Test</p>
+                  <p>Lekki, Lagos Nigeria</p>
+                  <p>08132556677</p>
+                </div>
+                <div className="w-full h-fit flex flex-col text-[15px]">
+                  <h1 className="text-[13px]">Patient Details</h1>
+                  <p>Emmanuel Afolabi</p>
+                  <p>08132556677</p>
+                </div>
+              </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="w-full h-fit flex flex-col text-[15px]">
-                <h1>Biiled from:</h1>
-                <p>Hospital test</p>
-              </div>
-              <div className="w-full h-fit flex flex-col text-[15px]">
-                <h1>Billed to:</h1>
-                <p>Emmnual Afolabi</p>
-              </div>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="w-full h-fit flex flex-col text-[15px]">
-                <h1>Service Provider</h1>
-                <p>Hospital Test</p>
-                <p>Lekki, Lagos Nigeria</p>
-                <p>08132556677</p>
-              </div>
-              <div className="w-full h-fit flex flex-col text-[15px]">
-                <h1>Patient Details</h1>
-                <p>Emmanuel Afolabi</p>
-                <p>08132556677</p>
-              </div>
-            </div>
+            <TableComponent />
           </div>
         </div>
       </div>

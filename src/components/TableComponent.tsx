@@ -27,7 +27,7 @@ const menuItems = [
     id: 3,
     label: "Pharoah Moses, 5, 4000",
     name: "Pharoah Moses",
-    duration: 4,
+    duration: 5,
     amount: 4000,
   },
 ];
@@ -35,77 +35,136 @@ const menuItems = [
 const tableHead = ["Date", "Description/Unit", "Duration", "Amount"];
 
 const TableComponent: React.FC = () => {
-  const initform = {
+  const initForm = {
     duration: "",
     amount: "",
   };
-  const [selected, setSelected] = React.useState("");
-  const [selectedAmount, setSelectAmount] = React.useState(initform);
 
-  const handleChange = (event: SelectChangeEvent) => {
+  const [rows, setRows] = React.useState<
+    {
+      date: string;
+      selected: string;
+      selectedAmount: { duration: string; amount: string };
+    }[]
+  >([]);
+
+  const increaseDuration = (index: number) => {
+    const updatedRows = [...rows];
+    const currentDuration = parseInt(
+      updatedRows[index].selectedAmount.duration
+    );
+    updatedRows[index].selectedAmount.duration = (
+      currentDuration + 1
+    ).toString();
+    setRows(updatedRows);
+  };
+
+  const decreaseDuration = (index: number) => {
+    const updatedRows = [...rows];
+    const currentDuration = parseInt(
+      updatedRows[index].selectedAmount.duration
+    );
+    if (currentDuration > 0) {
+      updatedRows[index].selectedAmount.duration = (
+        currentDuration - 1
+      ).toString();
+    }
+    setRows(updatedRows);
+  };
+
+  const handleChange = (event: SelectChangeEvent, i: number) => {
     const selectedLabel = event.target.value;
-    setSelected(selectedLabel);
+    const updatedRows = [...rows];
+    updatedRows[i].selected = selectedLabel;
 
     const selectedItem = menuItems.find((item) => item.label === selectedLabel);
 
     if (selectedItem) {
-      setSelectAmount({
+      updatedRows[i].selectedAmount = {
         duration: selectedItem.duration.toString(),
         amount: selectedItem.amount.toString(),
-      });
+      };
     }
+    setRows(updatedRows);
+  };
+
+  const addRow = () => {
+    setRows([
+      ...rows,
+      { date: "04 July, 2024", selected: "", selectedAmount: initForm },
+    ]);
   };
 
   return (
-    <div className="w-full h-fit bg-white ">
-      <table className="w-full min-w-max table-auto text-left">
+    <div className='w-full h-fit bg-white'>
+      <table className='w-full min-w-max table-auto text-left'>
         <thead>
-          <tr className="">
-            {tableHead.map((items, i) => (
-              <th key={i} className="border-b text-black border-gray-300 p-4">
-                {items}
+          <tr>
+            {tableHead.map((item, i) => (
+              <th key={i} className='border-b text-black border-gray-300 p-4'>
+                {item}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          <tr className="even:bg-blue-gray-50/50">
-            <td className="p-4">04 July, 2024</td>
-            <td className="p-4">
-              <Box sx={{ minWidth: 250 }}>
-                <FormControl fullWidth>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={selected}
-                    onChange={handleChange}
-                  >
-                    {menuItems.map(({ id, label, duration, amount }) => (
-                      <MenuItem key={id} value={label}>
-                        {label}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </FormControl>
-              </Box>
-            </td>
-            <td className="p-4">
-              <div className="flex gap-1">
-                <CiSquareMinus className="text-[30px] cursor-pointer" />
-                <input
-                  readOnly
-                  type="text"
-                  className="border border-gray-600 rounded-md w-9 h-8 flex place-content-center text-center items-center outline-none focus:outline-none "
-                  placeholder="unit"
-                  value={selectedAmount.duration}
-                />
-                <CiSquarePlus className="text-[30px] cursor-pointer" />
-              </div>
-            </td>
-            <td className="p-4">{selectedAmount.amount}</td>
-          </tr>
+          {rows.map((row, index) => (
+            <tr
+              key={index}
+              className='even:bg-blue-gray-50/50 border-b border-gray-200'
+            >
+              <td className='p-4'>{row.date}</td>
+              <td className='p-4'>
+                <Box sx={{ minWidth: 250 }}>
+                  <FormControl fullWidth>
+                    <Select
+                      labelId={`select-label-${index}`}
+                      id={`select-${index}`}
+                      value={row.selected}
+                      onChange={(e) => handleChange(e, index)}
+                    >
+                      {menuItems.map(({ id, label }) => (
+                        <MenuItem key={id} value={label}>
+                          {label}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </Box>
+              </td>
+              <td className='p-4'>
+                <div className='flex gap-1'>
+                  <CiSquareMinus
+                    onClick={() => decreaseDuration(index)}
+                    className='text-[30px] cursor-pointer'
+                  />
+                  <input
+                    readOnly
+                    type='text'
+                    className='border border-gray-600 rounded-md w-9 h-8 flex place-content-center text-center items-center outline-none focus:outline-none'
+                    placeholder='unit'
+                    value={row.selectedAmount.duration}
+                  />
+                  <CiSquarePlus
+                    onClick={() => increaseDuration(index)}
+                    className='text-[30px] cursor-pointer'
+                  />
+                </div>
+              </td>
+              <td className='p-4'>{row.selectedAmount.amount}</td>
+            </tr>
+          ))}
         </tbody>
       </table>
+      <div className='p-4 w-full flex justify-end'>
+        <button
+          className='text-blue-600 text-[13px] bg-none'
+          color='primary'
+          onClick={addRow}
+        >
+          Add new line
+        </button>
+      </div>
     </div>
   );
 };

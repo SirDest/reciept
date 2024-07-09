@@ -5,7 +5,6 @@ const ModalButton: React.FC = () => {
   const [modal, setModal] = useState(false);
   const showmodal = () => {
     setModal((prev) => !prev);
-    console.log(modal);
   };
 
   return (
@@ -13,7 +12,7 @@ const ModalButton: React.FC = () => {
       {!modal ? (
         <button
           onClick={showmodal}
-          className="px-3 py-2 rounded text-[17px] bg-white hover:bg-gray-400 ease-in-out duration-300"
+          className='px-3 py-2 rounded text-[17px] bg-white hover:bg-gray-400 ease-in-out duration-300'
         >
           Click
         </button>

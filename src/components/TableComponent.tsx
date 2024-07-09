@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Box,
   FormControl,
@@ -7,30 +7,9 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { CiSquareMinus, CiSquarePlus } from "react-icons/ci";
-
-const menuItems = [
-  {
-    id: 1,
-    label: "Akinro Destined, 10, 2000",
-    name: "Akinro Destined",
-    duration: 10,
-    amount: 2000,
-  },
-  {
-    id: 2,
-    label: "Bliss Ellams, 4, 3400",
-    name: "Bliss Ellams",
-    duration: 4,
-    amount: 3400,
-  },
-  {
-    id: 3,
-    label: "Pharoah Moses, 5, 4000",
-    name: "Pharoah Moses",
-    duration: 5,
-    amount: 4000,
-  },
-];
+import { IoTrashOutline } from "react-icons/io5";
+import { formattedDate } from "./exports/Date";
+import { menuItems } from "./exports/Menuitems";
 
 const tableHead = ["Date", "Description/Unit", "Duration", "Amount"];
 
@@ -46,7 +25,21 @@ const TableComponent: React.FC = () => {
       selected: string;
       selectedAmount: { duration: string; amount: string };
     }[]
-  >([]);
+  >(() => {
+    const savedRows = localStorage.getItem("tableRows");
+    return savedRows ? JSON.parse(savedRows) : [];
+  });
+
+  const addRow = () => {
+    setRows([
+      ...rows,
+      { date: formattedDate, selected: "", selectedAmount: initForm },
+    ]);
+  };
+
+  useEffect(() => {
+    localStorage.setItem("tableRows", JSON.stringify(rows));
+  }, [rows]);
 
   const increaseDuration = (index: number) => {
     const updatedRows = [...rows];
@@ -88,11 +81,9 @@ const TableComponent: React.FC = () => {
     setRows(updatedRows);
   };
 
-  const addRow = () => {
-    setRows([
-      ...rows,
-      { date: "04 July, 2024", selected: "", selectedAmount: initForm },
-    ]);
+  const deleteRow = (index: number) => {
+    const updatedRows = rows.filter((_, i) => i !== index);
+    setRows(updatedRows);
   };
 
   return (
@@ -133,14 +124,13 @@ const TableComponent: React.FC = () => {
                 </Box>
               </td>
               <td className='p-4'>
-                <div className='flex gap-1'>
+                <div className='flex gap-1 items-center'>
                   <CiSquareMinus
                     onClick={() => decreaseDuration(index)}
                     className='text-[30px] cursor-pointer'
                   />
                   <input
-                    readOnly
-                    type='text'
+                    type='number'
                     className='border border-gray-600 rounded-md w-9 h-8 flex place-content-center text-center items-center outline-none focus:outline-none'
                     placeholder='unit'
                     value={row.selectedAmount.duration}
@@ -152,6 +142,11 @@ const TableComponent: React.FC = () => {
                 </div>
               </td>
               <td className='p-4'>{row.selectedAmount.amount}</td>
+              <td className='p-4'>
+                <button>
+                  <IoTrashOutline onClick={() => deleteRow(index)} />
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

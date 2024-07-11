@@ -11,7 +11,7 @@ import { IoTrashOutline } from "react-icons/io5";
 import { formattedDate } from "./exports/Date";
 import { menuItems } from "./exports/Menuitems";
 
-const tableHead = ["Date", "Description/Unit", "Duration", "Amount"];
+const tableHead = ["Date", "Description/Unit", "Duration", "Amount", ""];
 
 const TableComponent: React.FC = () => {
   const initForm = {
@@ -151,7 +151,7 @@ const TableComponent: React.FC = () => {
           ))}
         </tbody>
       </table>
-      <div className='p-4 w-full flex justify-end'>
+      <div className='p-4 w-full flex justify-start'>
         <button
           className='text-blue-600 text-[13px] bg-none'
           color='primary'

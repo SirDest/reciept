@@ -13,7 +13,7 @@ const Modal = ({ setModal }: myProps) => {
 
   return (
     <div className='lg:w-[750px] w-full h-2/3 bg-white flex flex-col fixed rounded overflow-hidden'>
-      <div className='w-full h-fit flex justify-between items-center py-2 px-4 border-b border-gray-400'>
+      <div className='w-full h-full flex justify-between items-center py-2 px-4 border-b border-gray-400'>
         <p>Lorem ipsum dolor, sit amet consectetur adipisicing.</p>
         <div className='flex w-fit h-fit gap-8 items-center'>
           <button className='px-5 py-2 h-fit bg-blue-400 hover:bg-opacity-85 rounded flex items-center'>

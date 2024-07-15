@@ -11,12 +11,12 @@ import { IoTrashOutline } from "react-icons/io5";
 import { formattedDate } from "./exports/Date";
 import { menuItems } from "./exports/Menuitems";
 
-const tableHead = ["Date", "Description/Unit", "Duration", "Amount", ""];
+const tableHead = ["Date", "Description/Unit", "Duration", "Amount ($)", ""];
 
-const TableComponent: React.FC = () => {
+const TableComponent = () => {
   const initForm = {
     duration: "",
-    amount: "",
+    amount: "0",
   };
 
   const [rows, setRows] = React.useState<
@@ -49,7 +49,6 @@ const TableComponent: React.FC = () => {
     updatedRows[index].selectedAmount.duration = (
       currentDuration * 2
     ).toString();
-
     const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
     updatedRows[index].selectedAmount.amount = (currentAmount * 2).toString();
     setRows(updatedRows);
@@ -92,6 +91,22 @@ const TableComponent: React.FC = () => {
     const updatedRows = rows.filter((_, i) => i !== index);
     setRows(updatedRows);
   };
+
+  const calculateSubtotal = () => {
+    return rows.reduce(
+      (acc, row) => acc + parseFloat(row.selectedAmount.amount),
+      0
+    );
+  };
+
+  const calculateTax = (subtotal: number) => {
+    const taxRate = 0.05; // 5% tax
+    return subtotal * taxRate;
+  };
+
+  const subtotal = calculateSubtotal();
+  const tax = calculateTax(subtotal);
+  const total = subtotal + tax;
 
   return (
     <div className='w-full h-fit bg-white'>
@@ -166,6 +181,30 @@ const TableComponent: React.FC = () => {
         >
           Add new line
         </button>
+      </div>
+      <div className='py-8 px-4 w-full flex justify-end'>
+        <div className='w-[250px] h-fit text-[13px] flex flex-col justify-center gap-3'>
+          <div className='flex w-full justify-between items-center p-1'>
+            <p>Subtotal:</p>
+            <p>
+              $ <span className='text-[15px]'>{subtotal}</span>
+            </p>
+          </div>
+          <div className='flex w-full justify-between items-center p-1'>
+            <p>Discount:</p>
+            <p>0</p>
+          </div>
+          <div className='flex w-full justify-between items-center border-b border-gray-300 p-1'>
+            <p>Tax: (5%)</p>
+            <p>
+              $ <span className='text-[15px]'>{tax}</span>
+            </p>
+          </div>
+          <div className='flex w-full justify-between p-3 items-center'>
+            <p>Total:</p>
+            <p className='font-bold text-[20px]'>$ {total}</p>
+          </div>
+        </div>
       </div>
     </div>
   );

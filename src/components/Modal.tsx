@@ -28,7 +28,7 @@ const Modal = ({ setModal }: myProps) => {
         </div>
       </div>
       <div className='modal-content bg-white w-full h-fit px-4 overflow-y-auto'>
-        <div className='bg-gray-200 w-full h-[600px] p-4'>
+        <div className='bg-gray-200 w-full h-fit p-4'>
           <div className='flex flex-col h-full w-full rounded-t-md'>
             <div className='bg-white w-full h-fit flex flex-col pt-7 pb-16 px-4 gap-3 rounded-t-md border-b-4 border-gray-500'>
               <h1 className='text-[27px]'>Invoice</h1>

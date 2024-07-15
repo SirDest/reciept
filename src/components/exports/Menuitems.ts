@@ -1,24 +1,24 @@
 export const menuItems = [
   {
     id: 1,
-    label: "Akinro Destined, 10, 1591",
+    label: "Akinro Destined, 10, 11000",
     name: "Akinro Destined",
     duration: 10,
-    amount: 1591,
+    amount: 11000,
   },
   {
     id: 2,
-    label: "Bliss Ellams, 4, 3400",
+    label: "Bliss Ellams, 5, 3000",
     name: "Bliss Ellams",
-    duration: 4,
-    amount: 3400,
+    duration: 5,
+    amount: 3000,
   },
   {
     id: 3,
-    label: "Ayra Starr, 21, 1320",
+    label: "Ayra Starr, 20, 6000",
     name: "Ayra Starr",
-    duration: 21,
-    amount: 1320,
+    duration: 20,
+    amount: 6000,
   },
   {
     id: 4,
@@ -29,9 +29,9 @@ export const menuItems = [
   },
   {
     id: 5,
-    label: "Jay Cray, 1, 3900",
+    label: "Jay Cray, 1, 9000",
     name: "Jay Cray",
     duration: 1,
-    amount: 3900,
+    amount: 9000,
   },
 ];

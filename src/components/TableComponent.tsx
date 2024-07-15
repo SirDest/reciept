@@ -47,8 +47,11 @@ const TableComponent: React.FC = () => {
       updatedRows[index].selectedAmount.duration
     );
     updatedRows[index].selectedAmount.duration = (
-      currentDuration + 1
+      currentDuration * 2
     ).toString();
+
+    const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
+    updatedRows[index].selectedAmount.amount = (currentAmount * 2).toString();
     setRows(updatedRows);
   };
 
@@ -57,11 +60,15 @@ const TableComponent: React.FC = () => {
     const currentDuration = parseInt(
       updatedRows[index].selectedAmount.duration
     );
-    if (currentDuration > 0) {
+    const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
+    if (currentDuration > 1) {
       updatedRows[index].selectedAmount.duration = (
-        currentDuration - 1
+        currentDuration / 2
       ).toString();
+
+      updatedRows[index].selectedAmount.amount = (currentAmount / 2).toString();
     }
+
     setRows(updatedRows);
   };
 
@@ -130,7 +137,7 @@ const TableComponent: React.FC = () => {
                     className='text-[30px] cursor-pointer'
                   />
                   <input
-                    type='number'
+                    type='text'
                     className='border border-gray-600 rounded-md w-9 h-8 flex place-content-center text-center items-center outline-none focus:outline-none'
                     placeholder='unit'
                     value={row.selectedAmount.duration}

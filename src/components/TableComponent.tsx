@@ -15,7 +15,7 @@ const tableHead = ["Date", "Description/Unit", "Duration", "Amount ($)", ""];
 
 const TableComponent = () => {
   const initForm = {
-    duration: "",
+    duration: "0",
     amount: "0",
   };
 
@@ -46,12 +46,16 @@ const TableComponent = () => {
     const currentDuration = parseInt(
       updatedRows[index].selectedAmount.duration
     );
-    updatedRows[index].selectedAmount.duration = (
-      currentDuration * 2
-    ).toString();
     const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
-    updatedRows[index].selectedAmount.amount = (currentAmount * 2).toString();
-    setRows(updatedRows);
+    if (currentDuration > 0) {
+      updatedRows[index].selectedAmount.duration = (
+        currentDuration + 10
+      ).toString();
+      updatedRows[index].selectedAmount.amount = (
+        currentAmount + 500
+      ).toString();
+      setRows(updatedRows);
+    }
   };
 
   const decreaseDuration = (index: number) => {
@@ -60,12 +64,14 @@ const TableComponent = () => {
       updatedRows[index].selectedAmount.duration
     );
     const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
-    if (currentDuration > 1) {
+    if (currentDuration > 10) {
       updatedRows[index].selectedAmount.duration = (
-        currentDuration / 2
+        currentDuration - 10
       ).toString();
 
-      updatedRows[index].selectedAmount.amount = (currentAmount / 2).toString();
+      updatedRows[index].selectedAmount.amount = (
+        currentAmount - 500
+      ).toString();
     }
 
     setRows(updatedRows);
@@ -106,7 +112,8 @@ const TableComponent = () => {
 
   const subtotal = calculateSubtotal();
   const tax = calculateTax(subtotal);
-  const total = subtotal + tax;
+  const discount = 0;
+  const total = subtotal + tax - discount;
 
   return (
     <div className='w-full h-fit bg-white'>
@@ -153,7 +160,7 @@ const TableComponent = () => {
                   />
                   <input
                     type='text'
-                    className='border border-gray-600 rounded-md w-9 h-8 flex place-content-center text-center items-center outline-none focus:outline-none'
+                    className='border border-gray-600 rounded-md w-9 h-9 flex place-content-center text-center items-center outline-none focus:outline-none'
                     placeholder='unit'
                     value={row.selectedAmount.duration}
                   />
@@ -192,7 +199,7 @@ const TableComponent = () => {
           </div>
           <div className='flex w-full justify-between items-center p-1'>
             <p>Discount:</p>
-            <p>0</p>
+            <p>{discount}</p>
           </div>
           <div className='flex w-full justify-between items-center border-b border-gray-300 p-1'>
             <p>Tax: (5%)</p>

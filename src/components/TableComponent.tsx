@@ -24,16 +24,24 @@ const TableComponent = () => {
       date: string;
       selected: string;
       selectedAmount: { duration: string; amount: string };
+      originalValue: { duration: string; amount: string };
     }[]
   >(() => {
     const savedRows = localStorage.getItem("tableRows");
     return savedRows ? JSON.parse(savedRows) : [];
   });
 
+  console.log("rows", rows);
+
   const addRow = () => {
     setRows([
       ...rows,
-      { date: formattedDate, selected: "", selectedAmount: initForm },
+      {
+        date: formattedDate,
+        selected: "",
+        selectedAmount: initForm,
+        originalValue: initForm,
+      },
     ]);
   };
 
@@ -43,16 +51,25 @@ const TableComponent = () => {
 
   const increaseDuration = (index: number) => {
     const updatedRows = [...rows];
+    const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
     const currentDuration = parseInt(
       updatedRows[index].selectedAmount.duration
     );
-    const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
+
+    const originalAmount = parseInt(updatedRows[index].originalValue.amount);
+    const originalDuration = parseInt(
+      updatedRows[index].originalValue.duration
+    );
+
     if (currentDuration > 0) {
+      const incrementDur = (originalDuration * 50) / 100;
+      const incrementAmount = (originalAmount * 50) / 100;
+
       updatedRows[index].selectedAmount.duration = (
-        currentDuration + 10
+        currentDuration + incrementDur
       ).toString();
       updatedRows[index].selectedAmount.amount = (
-        currentAmount + 500
+        currentAmount + incrementAmount
       ).toString();
       setRows(updatedRows);
     }
@@ -64,16 +81,24 @@ const TableComponent = () => {
       updatedRows[index].selectedAmount.duration
     );
     const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
-    if (currentDuration > 10) {
+
+    const originalAmount = parseInt(updatedRows[index].originalValue.amount);
+    const originalDuration = parseInt(
+      updatedRows[index].originalValue.duration
+    );
+
+    if (currentDuration > originalDuration) {
+      const incrementDur = (originalDuration * 50) / 100;
+      const incrementAmount = (originalAmount * 50) / 100;
+
       updatedRows[index].selectedAmount.duration = (
-        currentDuration - 10
+        currentDuration - incrementDur
       ).toString();
 
       updatedRows[index].selectedAmount.amount = (
-        currentAmount - 500
+        currentAmount - incrementAmount
       ).toString();
     }
-
     setRows(updatedRows);
   };
 
@@ -85,6 +110,10 @@ const TableComponent = () => {
     const selectedItem = menuItems.find((item) => item.label === selectedLabel);
 
     if (selectedItem) {
+      updatedRows[i].originalValue = {
+        duration: selectedItem.duration.toString(),
+        amount: selectedItem.amount.toString(),
+      };
       updatedRows[i].selectedAmount = {
         duration: selectedItem.duration.toString(),
         amount: selectedItem.amount.toString(),

@@ -11,7 +11,13 @@ import { IoTrashOutline } from "react-icons/io5";
 import { formattedDate } from "./exports/Date";
 import { menuItems } from "./exports/Menuitems";
 
-const tableHead = ["Date", "Description/Unit", "Duration", "Amount ($)", ""];
+const tableHead = [
+  "Date",
+  "Description/Unit",
+  "Duration (min)",
+  "Amount ($)",
+  "",
+];
 
 const TableComponent = () => {
   const initForm = {
@@ -30,8 +36,6 @@ const TableComponent = () => {
     const savedRows = localStorage.getItem("tableRows");
     return savedRows ? JSON.parse(savedRows) : [];
   });
-
-  console.log("rows", rows);
 
   const addRow = () => {
     setRows([
@@ -135,22 +139,23 @@ const TableComponent = () => {
   };
 
   const calculateTax = (subtotal: number) => {
-    const taxRate = 0.05; // 5% tax
+    // 5% tax
+    const taxRate = 0.05;
     return subtotal * taxRate;
   };
 
   const subtotal = calculateSubtotal();
   const tax = calculateTax(subtotal);
-  const discount = 0;
+  const discount = 0; // no discount
   const total = subtotal + tax - discount;
 
   return (
-    <div className="w-full h-fit bg-white">
-      <table className="w-full min-w-max table-auto text-left">
+    <div className='w-full h-fit bg-white p-2'>
+      <table className='w-full min-w-max table-auto text-left'>
         <thead>
           <tr>
             {tableHead.map((item, i) => (
-              <th key={i} className="border-b text-black border-gray-300 p-4">
+              <th key={i} className='border-b text-black border-gray-300 p-4'>
                 {item}
               </th>
             ))}
@@ -160,10 +165,10 @@ const TableComponent = () => {
           {rows.map((row, index) => (
             <tr
               key={index}
-              className="even:bg-blue-gray-50/50 border-b border-gray-200"
+              className='even:bg-blue-gray-50/50 border-b border-gray-200'
             >
-              <td className="p-4">{row.date}</td>
-              <td className="p-4">
+              <td className='p-4'>{row.date}</td>
+              <td className='p-4'>
                 <Box sx={{ minWidth: 250 }}>
                   <FormControl fullWidth>
                     <Select
@@ -181,26 +186,26 @@ const TableComponent = () => {
                   </FormControl>
                 </Box>
               </td>
-              <td className="p-4">
-                <div className="flex gap-1 items-center">
+              <td className='p-4'>
+                <div className='flex gap-1 items-center'>
                   <CiSquareMinus
                     onClick={() => decreaseDuration(index)}
-                    className="text-[30px] cursor-pointer"
+                    className='text-[30px] cursor-pointer'
                   />
                   <input
-                    type="text"
-                    className="border border-gray-600 rounded-md w-9 h-9 flex place-content-center text-center items-center outline-none focus:outline-none"
-                    placeholder="unit"
+                    type='text'
+                    className='border border-gray-600 rounded-md w-9 h-9 flex place-content-center text-center items-center outline-none focus:outline-none'
+                    placeholder='unit'
                     value={row.selectedAmount.duration}
                   />
                   <CiSquarePlus
                     onClick={() => increaseDuration(index)}
-                    className="text-[30px] cursor-pointer"
+                    className='text-[30px] cursor-pointer'
                   />
                 </div>
               </td>
-              <td className="p-4">{row.selectedAmount.amount}</td>
-              <td className="p-4">
+              <td className='p-4'>{row.selectedAmount.amount}</td>
+              <td className='p-4'>
                 <button>
                   <IoTrashOutline onClick={() => deleteRow(index)} />
                 </button>
@@ -209,36 +214,36 @@ const TableComponent = () => {
           ))}
         </tbody>
       </table>
-      <div className="p-4 w-full flex justify-start">
+      <div className='p-4 w-full flex justify-start'>
         <button
-          className="text-blue-600 text-[13px] bg-none"
-          color="primary"
+          className='text-blue-600 text-[13px] bg-none'
+          color='primary'
           onClick={addRow}
         >
           Add new line
         </button>
       </div>
-      <div className="py-8 px-4 w-full flex justify-end">
-        <div className="w-[250px] h-fit text-[13px] flex flex-col justify-center gap-3">
-          <div className="flex w-full justify-between items-center p-1">
+      <div className='py-8 px-4 w-full flex justify-end'>
+        <div className='w-[250px] h-fit text-[13px] flex flex-col justify-center gap-3'>
+          <div className='flex w-full justify-between items-center p-1'>
             <p>Subtotal:</p>
-            <p className="flex flex-row items-center text-[15px]">
+            <p className='flex flex-row items-center text-[15px]'>
               $ {subtotal}
             </p>
           </div>
-          <div className="flex w-full justify-between items-center p-1">
+          <div className='flex w-full justify-between items-center p-1'>
             <p>Discount:</p>
             <p>{discount}</p>
           </div>
-          <div className="flex w-full justify-between items-center border-b border-gray-300 p-1">
+          <div className='flex w-full justify-between items-center border-b border-gray-300 p-1'>
             <p>Tax: (5%)</p>
-            <p className="flex flex-row justify-between items-center text-[15px]">
+            <p className='flex flex-row justify-between items-center text-[15px]'>
               $ {tax}
             </p>
           </div>
-          <div className="flex w-full justify-between p-3 items-center">
+          <div className='flex w-full justify-between p-3 items-center'>
             <p>Total:</p>
-            <p className="font-bold text-[20px]">$ {total}</p>
+            <p className='font-bold text-[20px]'>$ {total}</p>
           </div>
         </div>
       </div>

@@ -10,12 +10,28 @@ interface myProps {
 const Modal = ({ setModal }: myProps) => {
   const [receipt, setReceipt] = useState(false);
 
+  const [rows, setRows] = React.useState<
+    {
+      date: string;
+      selected: string;
+      selectedAmount: { duration: string; amount: string };
+      originalValue: { duration: string; amount: string };
+    }[]
+  >([]);
+
   const showmodal = () => {
     setModal((prev) => !prev);
   };
 
   const showReceipt = () => {
+    const existingData = localStorage.getItem("tableData");
+    const data = existingData ? JSON.parse(existingData) : [];
+    const updatedData = [...data, ...rows];
+
+    localStorage.setItem("tableData", JSON.stringify(updatedData));
+
     setReceipt((prev) => !prev);
+    setRows([]);
   };
 
   return (
@@ -72,7 +88,7 @@ const Modal = ({ setModal }: myProps) => {
                     </div>
                   </div>
                 </div>
-                <TableComponent />
+                <TableComponent rows={rows} setRows={setRows} />
               </div>
             </div>
           </div>

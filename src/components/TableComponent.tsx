@@ -11,6 +11,37 @@ import { IoTrashOutline } from "react-icons/io5";
 import { formattedDate } from "./exports/Date";
 import { menuItems } from "./exports/Menuitems";
 
+interface myProps {
+  rows: {
+    date: string;
+    selected: string;
+    selectedAmount: {
+      duration: string;
+      amount: string;
+    };
+    originalValue: {
+      duration: string;
+      amount: string;
+    };
+  }[];
+  setRows: React.Dispatch<
+    React.SetStateAction<
+      {
+        date: string;
+        selected: string;
+        selectedAmount: {
+          duration: string;
+          amount: string;
+        };
+        originalValue: {
+          duration: string;
+          amount: string;
+        };
+      }[]
+    >
+  >;
+}
+
 const tableHead = [
   "Date",
   "Description/Unit",
@@ -19,7 +50,7 @@ const tableHead = [
   "",
 ];
 
-const TableComponent = () => {
+const TableComponent = ({ rows, setRows }: myProps) => {
   const initForm = {
     duration: "0",
     amount: "0",
@@ -37,14 +68,9 @@ const TableComponent = () => {
   //   return savedRows ? JSON.parse(savedRows) : [];
   // });
 
-  const [rows, setRows] = React.useState<
-    {
-      date: string;
-      selected: string;
-      selectedAmount: { duration: string; amount: string };
-      originalValue: { duration: string; amount: string };
-    }[]
-  >([]);
+  // useEffect(() => {
+  //   localStorage.setItem("tableRows", JSON.stringify(rows));
+  // }, [rows]);
 
   const addRow = () => {
     setRows([
@@ -57,10 +83,6 @@ const TableComponent = () => {
       },
     ]);
   };
-
-  // useEffect(() => {
-  //   localStorage.setItem("tableRows", JSON.stringify(rows));
-  // }, [rows]);
 
   const increaseDuration = (index: number) => {
     const updatedRows = [...rows];
@@ -90,6 +112,7 @@ const TableComponent = () => {
     const currentDuration = parseInt(
       updatedRows[index].selectedAmount.duration
     );
+
     const currentAmount = parseInt(updatedRows[index].selectedAmount.amount);
 
     const originalAmount = parseInt(updatedRows[index].originalValue.amount);

@@ -1,9 +1,5 @@
-import React, { Dispatch, SetStateAction } from "react";
-import {
-  IoArrowBackOutline,
-  IoCloseOutline,
-  IoExitOutline,
-} from "react-icons/io5";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { IoArrowBackOutline, IoExitOutline } from "react-icons/io5";
 
 interface myProps {
   setReceipt: Dispatch<SetStateAction<boolean>>;
@@ -11,6 +7,8 @@ interface myProps {
 }
 
 const ReceiptModal = ({ setReceipt, setModal }: myProps) => {
+  const [items, setItems] = useState([]);
+
   const exitReceipt = () => {
     setReceipt((prev) => !prev);
   };
@@ -22,6 +20,14 @@ const ReceiptModal = ({ setReceipt, setModal }: myProps) => {
   const closeModal = () => {
     setModal((prev) => !prev);
   };
+
+  useEffect(() => {
+    const storedData = localStorage.getItem("tableData");
+    if (storedData) {
+      setItems(JSON.parse(storedData));
+    }
+  }, []);
+
   return (
     <div className='lg:w-[780px] w-full h-2/3 bg-green-600 flex flex-col fixed rounded overflow-hidden'>
       <div className='w-full h-fit flex justify-between items-center py-2 px-4 border-b border-gray-400'>

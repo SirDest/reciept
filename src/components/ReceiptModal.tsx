@@ -37,7 +37,7 @@ const ReceiptModal = ({ setReceipt, setModal }: myProps) => {
 
         <div className='flex w-fit h-fit gap-8 items-center'>
           <button
-            onClick={saveReceipt}
+            // onClick={saveReceipt}
             className='px-5 py-2 h-fit bg-blue-400 hover:bg-opacity-85 rounded flex items-center'
           >
             Save
@@ -48,6 +48,13 @@ const ReceiptModal = ({ setReceipt, setModal }: myProps) => {
           >
             <IoExitOutline />
           </button>
+        </div>
+      </div>
+      <div className='modal-content bg-white w-full h-fit px-4 overflow-y-auto'>
+        <div className='bg-gray-200 w-full h-fit p-4'>
+          <div className='flex flex-col h-full w-full rounded-t-md'>
+            {/* Content goes here */}
+          </div>
         </div>
       </div>
     </div>

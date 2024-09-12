@@ -25,6 +25,18 @@ const TableComponent = () => {
     amount: "0",
   };
 
+  // const [rows, setRows] = React.useState<
+  //   {
+  //     date: string;
+  //     selected: string;
+  //     selectedAmount: { duration: string; amount: string };
+  //     originalValue: { duration: string; amount: string };
+  //   }[]
+  // >(() => {
+  //   const savedRows = localStorage.getItem("tableRows");
+  //   return savedRows ? JSON.parse(savedRows) : [];
+  // });
+
   const [rows, setRows] = React.useState<
     {
       date: string;
@@ -32,10 +44,7 @@ const TableComponent = () => {
       selectedAmount: { duration: string; amount: string };
       originalValue: { duration: string; amount: string };
     }[]
-  >(() => {
-    const savedRows = localStorage.getItem("tableRows");
-    return savedRows ? JSON.parse(savedRows) : [];
-  });
+  >([]);
 
   const addRow = () => {
     setRows([
@@ -49,9 +58,9 @@ const TableComponent = () => {
     ]);
   };
 
-  useEffect(() => {
-    localStorage.setItem("tableRows", JSON.stringify(rows));
-  }, [rows]);
+  // useEffect(() => {
+  //   localStorage.setItem("tableRows", JSON.stringify(rows));
+  // }, [rows]);
 
   const increaseDuration = (index: number) => {
     const updatedRows = [...rows];
@@ -66,14 +75,11 @@ const TableComponent = () => {
     );
 
     if (currentDuration > 0) {
-      const incrementDur = (originalDuration * 50) / 100;
-      const incrementAmount = (originalAmount * 50) / 100;
-
       updatedRows[index].selectedAmount.duration = (
-        currentDuration + incrementDur
+        currentDuration + originalDuration
       ).toString();
       updatedRows[index].selectedAmount.amount = (
-        currentAmount + incrementAmount
+        currentAmount + originalAmount
       ).toString();
       setRows(updatedRows);
     }
@@ -92,15 +98,12 @@ const TableComponent = () => {
     );
 
     if (currentDuration > originalDuration) {
-      const incrementDur = (originalDuration * 50) / 100;
-      const incrementAmount = (originalAmount * 50) / 100;
-
       updatedRows[index].selectedAmount.duration = (
-        currentDuration - incrementDur
+        currentDuration - originalDuration
       ).toString();
 
       updatedRows[index].selectedAmount.amount = (
-        currentAmount - incrementAmount
+        currentAmount - originalAmount
       ).toString();
     }
     setRows(updatedRows);

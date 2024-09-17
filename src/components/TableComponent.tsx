@@ -176,68 +176,73 @@ const TableComponent = ({ rows, setRows }: myProps) => {
   const total = subtotal + tax - discount;
 
   return (
-    <div className='w-full h-fit bg-white p-2'>
+    <div className='w-full h-fit bg-white'>
       <table className='w-full min-w-max table-auto text-left'>
         <thead>
           <tr>
             {tableHead.map((item, i) => (
-              <th key={i} className='border-b text-black border-gray-300 p-4'>
+              <th key={i} className='border-b text-black border-gray-300 p-3'>
                 {item}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {rows.map(({ date, selected, selectedAmount }, index) => (
-            <tr
-              key={index}
-              className='even:bg-gray-200 border-b border-gray-200'
-            >
-              <td className='p-4'>{date}</td>
-              <td className='p-4'>
-                <Box sx={{ minWidth: 250 }}>
-                  <FormControl fullWidth>
-                    <Select
-                      labelId={`select-label-${index}`}
-                      id={`select-${index}`}
-                      value={selected}
-                      onChange={(e) => handleChange(e, index)}
-                    >
-                      {menuItems.map(({ id, label }) => (
-                        <MenuItem key={id} value={label}>
-                          {label}
-                        </MenuItem>
-                      ))}
-                    </Select>
-                  </FormControl>
-                </Box>
-              </td>
-              <td className='p-4'>
-                <div className='flex gap-1 items-center'>
-                  <CiSquareMinus
-                    onClick={() => decreaseDuration(index)}
-                    className='text-[30px] cursor-pointer'
-                  />
-                  <input
-                    type='text'
-                    className='border border-gray-600 rounded-md w-9 h-9 flex place-content-center text-center items-center outline-none focus:outline-none'
-                    placeholder='unit'
-                    value={selectedAmount.duration}
-                  />
-                  <CiSquarePlus
-                    onClick={() => increaseDuration(index)}
-                    className='text-[30px] cursor-pointer'
-                  />
-                </div>
-              </td>
-              <td className='p-4'>{selectedAmount.amount}</td>
-              <td className='p-4'>
-                <button>
-                  <IoTrashOutline onClick={() => deleteRow(index)} />
-                </button>
-              </td>
-            </tr>
-          ))}
+          {rows.map(
+            (
+              { date, selected, selectedAmount: { duration, amount } },
+              index
+            ) => (
+              <tr
+                key={index}
+                className='even:bg-gray-200 border-b border-gray-200'
+              >
+                <td className='p-3'>{date}</td>
+                <td className='p-3'>
+                  <Box sx={{ minWidth: 250 }}>
+                    <FormControl fullWidth>
+                      <Select
+                        labelId={`select-label-${index}`}
+                        id={`select-${index}`}
+                        value={selected}
+                        onChange={(e) => handleChange(e, index)}
+                      >
+                        {menuItems.map(({ id, label }) => (
+                          <MenuItem key={id} value={label}>
+                            {label}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                  </Box>
+                </td>
+                <td className='p-3'>
+                  <div className='flex gap-1 items-center'>
+                    <CiSquareMinus
+                      onClick={() => decreaseDuration(index)}
+                      className='text-[30px] cursor-pointer'
+                    />
+                    <input
+                      type='text'
+                      className='border border-gray-600 rounded-md w-9 h-9 flex place-content-center text-center items-center outline-none focus:outline-none'
+                      placeholder='unit'
+                      value={duration}
+                    />
+                    <CiSquarePlus
+                      onClick={() => increaseDuration(index)}
+                      className='text-[30px] cursor-pointer'
+                    />
+                  </div>
+                </td>
+                <td className='p-3'>{amount}</td>
+                <td className='p-3'>
+                  <button>
+                    <IoTrashOutline onClick={() => deleteRow(index)} />
+                  </button>
+                </td>
+              </tr>
+            )
+          )}
         </tbody>
       </table>
       <div className='p-4 w-full flex justify-start'>

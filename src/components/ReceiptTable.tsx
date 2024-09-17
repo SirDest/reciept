@@ -52,17 +52,22 @@ const ReceiptTable = ({ rows }: myProps) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map(({ date, selected, selectedAmount }, index) => (
-            <tr
-              key={index}
-              className='even:bg-gray-200 border-b border-gray-200 '
-            >
-              <td className='p-4'>{date}</td>
-              <td className='p-4'>{selected}</td>
-              <td className='p-4'>{selectedAmount.duration}</td>
-              <td className='p-4'>{selectedAmount.amount}</td>
-            </tr>
-          ))}
+          {rows.map(
+            (
+              { date, selected, selectedAmount: { duration, amount } },
+              index
+            ) => (
+              <tr
+                key={index}
+                className='odd:bg-gray-100 border-b border-gray-200 '
+              >
+                <td className='p-4'>{date}</td>
+                <td className='p-4'>{selected}</td>
+                <td className='p-4'>{duration}</td>
+                <td className='p-4'>{amount}</td>
+              </tr>
+            )
+          )}
         </tbody>
       </table>
       <div className='py-8 px-4 w-full flex justify-end'>

@@ -191,7 +191,7 @@ const TableComponent = ({ rows, setRows }: myProps) => {
           {rows.map(({ date, selected, selectedAmount }, index) => (
             <tr
               key={index}
-              className='even:bg-gray-500 border-b border-gray-200'
+              className='even:bg-gray-200 border-b border-gray-200'
             >
               <td className='p-4'>{date}</td>
               <td className='p-4'>

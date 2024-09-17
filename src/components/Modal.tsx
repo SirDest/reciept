@@ -2,6 +2,7 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { IoCloseOutline } from "react-icons/io5";
 import TableComponent from "./TableComponent";
 import ReceiptModal from "./ReceiptModal";
+import User from "./User";
 
 interface myProps {
   setModal: Dispatch<SetStateAction<boolean>>;
@@ -24,14 +25,20 @@ const Modal = ({ setModal }: myProps) => {
   };
 
   const showReceipt = () => {
-    const existingData = localStorage.getItem("tableData");
-    const data = existingData ? JSON.parse(existingData) : [];
-    const updatedData = [...data, ...rows];
+    if (rows.length === 0) {
+      return;
+    }
 
-    localStorage.setItem("tableData", JSON.stringify(updatedData));
+    // for local storage...
+
+    // const existingData = localStorage.getItem("tableData");
+    // const data = existingData ? JSON.parse(existingData) : [];
+    // const updatedData = [...data, ...rows];
+
+    // localStorage.setItem("tableData", JSON.stringify(updatedData));
 
     setReceipt((prev) => !prev);
-    setRows([]);
+    // setRows([]);
   };
 
   return (
@@ -58,43 +65,14 @@ const Modal = ({ setModal }: myProps) => {
           <div className='modal-content bg-white w-full h-fit px-4 overflow-y-auto'>
             <div className='bg-gray-200 w-full h-fit p-4'>
               <div className='flex flex-col h-full w-full rounded-t-md'>
-                <div className='bg-white w-full h-fit flex flex-col pt-7 pb-16 px-4 gap-3 rounded-t-md border-b-4 border-gray-500'>
-                  <h1 className='text-[27px]'>Invoice</h1>
-                  <div className='w-full h-fit flex flex-col text-[15px]'>
-                    <h1 className='text-[13px]'>Date:</h1>
-                    <p>04 Jul, 2024</p>
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <div className='w-full h-fit flex flex-col text-[15px]'>
-                      <h1 className='text-[13px]'>Biiled from:</h1>
-                      <p>Hospital test</p>
-                    </div>
-                    <div className='w-full h-fit flex flex-col text-[15px]'>
-                      <h1 className='text-[13px]'>Billed to:</h1>
-                      <p>Emmnual Afolabi</p>
-                    </div>
-                  </div>
-                  <div className='flex items-center justify-between'>
-                    <div className='w-full h-fit flex flex-col text-[15px]'>
-                      <h1 className='text-[13px]'>Service Provider</h1>
-                      <p>Hospital Test</p>
-                      <p>Lekki, Lagos Nigeria</p>
-                      <p>08132556677</p>
-                    </div>
-                    <div className='w-full h-fit flex flex-col text-[15px]'>
-                      <h1 className='text-[13px]'>Patient Details</h1>
-                      <p>Emmanuel Afolabi</p>
-                      <p>08132556677</p>
-                    </div>
-                  </div>
-                </div>
+                <User />
                 <TableComponent rows={rows} setRows={setRows} />
               </div>
             </div>
           </div>
         </div>
       ) : (
-        <ReceiptModal setReceipt={setReceipt} setModal={setModal} />
+        <ReceiptModal setReceipt={setReceipt} rows={rows} setModal={setModal} />
       )}
     </>
   );

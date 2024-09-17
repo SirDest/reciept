@@ -188,19 +188,19 @@ const TableComponent = ({ rows, setRows }: myProps) => {
           </tr>
         </thead>
         <tbody>
-          {rows.map((row, index) => (
+          {rows.map(({ date, selected, selectedAmount }, index) => (
             <tr
               key={index}
-              className='even:bg-blue-gray-50/50 border-b border-gray-200'
+              className='even:bg-gray-500 border-b border-gray-200'
             >
-              <td className='p-4'>{row.date}</td>
+              <td className='p-4'>{date}</td>
               <td className='p-4'>
                 <Box sx={{ minWidth: 250 }}>
                   <FormControl fullWidth>
                     <Select
                       labelId={`select-label-${index}`}
                       id={`select-${index}`}
-                      value={row.selected}
+                      value={selected}
                       onChange={(e) => handleChange(e, index)}
                     >
                       {menuItems.map(({ id, label }) => (
@@ -222,7 +222,7 @@ const TableComponent = ({ rows, setRows }: myProps) => {
                     type='text'
                     className='border border-gray-600 rounded-md w-9 h-9 flex place-content-center text-center items-center outline-none focus:outline-none'
                     placeholder='unit'
-                    value={row.selectedAmount.duration}
+                    value={selectedAmount.duration}
                   />
                   <CiSquarePlus
                     onClick={() => increaseDuration(index)}
@@ -230,7 +230,7 @@ const TableComponent = ({ rows, setRows }: myProps) => {
                   />
                 </div>
               </td>
-              <td className='p-4'>{row.selectedAmount.amount}</td>
+              <td className='p-4'>{selectedAmount.amount}</td>
               <td className='p-4'>
                 <button>
                   <IoTrashOutline onClick={() => deleteRow(index)} />

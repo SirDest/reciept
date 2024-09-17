@@ -27,20 +27,13 @@ const ReceiptModal = ({ rows, setReceipt, setModal }: myProps) => {
     setReceipt((prev) => !prev);
   };
 
-  const saveReceipt = () => {
-    setModal((prev) => !prev);
-  };
+  // const saveReceipt = () => {
+  //   setModal((prev) => !prev);
+  // };
 
   const closeModal = () => {
     setModal((prev) => !prev);
   };
-
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem("tableData");
-  //   if (storedData) {
-  //     setItems(JSON.parse(storedData));
-  //   }
-  // }, []);
 
   return (
     <div className='lg:w-[780px] w-full h-2/3 bg-white flex flex-col fixed rounded overflow-hidden'>
@@ -56,12 +49,12 @@ const ReceiptModal = ({ rows, setReceipt, setModal }: myProps) => {
         </div>
 
         <div className='flex w-fit h-fit gap-8 items-center'>
-          <button
+          {/* <button
             // onClick={saveReceipt}
             className='px-5 py-2 h-fit bg-blue-400 hover:bg-opacity-85 rounded flex items-center'
           >
             Save
-          </button>
+          </button> */}
           <button
             className='h-fit flex items-center text-[20px]'
             onClick={closeModal}

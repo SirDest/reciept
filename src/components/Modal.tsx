@@ -25,7 +25,10 @@ const Modal = ({ setModal }: myProps) => {
   };
 
   const showReceipt = () => {
-    if (rows.length === 0) {
+    if (
+      rows.length === 0 ||
+      rows.some((row) => rows.some((row) => row.selected.length === 0))
+    ) {
       return;
     }
 

@@ -1,9 +1,9 @@
 export const menuItems = [
   {
     id: 1,
-    label: "Akinro Destined, 30, #11000",
+    label: "Akinro Destined, 15, #11000",
     name: "Akinro Destined",
-    duration: 10,
+    duration: 15,
     amount: 11000,
   },
   {
@@ -15,23 +15,23 @@ export const menuItems = [
   },
   {
     id: 3,
-    label: "Ayra Starr, 20, #6000",
+    label: "Ayra Starr, 17, #6000",
     name: "Ayra Starr",
-    duration: 20,
+    duration: 17,
     amount: 6000,
   },
   {
     id: 4,
-    label: "Pharoah Moses, 10, #4000",
+    label: "Pharoah Moses, 23, #4000",
     name: "Pharoah Moses",
-    duration: 10,
+    duration: 23,
     amount: 4000,
   },
   {
     id: 5,
-    label: "Jay Cray, 20, #9000",
+    label: "Jay Cray, 9, #7000",
     name: "Jay Cray",
-    duration: 20,
-    amount: 9000,
+    duration: 9,
+    amount: 7000,
   },
 ];

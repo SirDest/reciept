@@ -193,10 +193,7 @@ const TableComponent = ({ rows, setRows }: myProps) => {
               { date, selected, selectedAmount: { duration, amount } },
               index
             ) => (
-              <tr
-                key={index}
-                className='even:bg-gray-200 border-b border-gray-200'
-              >
+              <tr key={index} className='border-b border-gray-200'>
                 <td className='p-3'>{date}</td>
                 <td className='p-3'>
                   <Box sx={{ minWidth: 250 }}>
